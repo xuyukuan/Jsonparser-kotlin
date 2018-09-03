@@ -1,0 +1,12 @@
+{
+  "number": 1,
+  "boolAndNull": [true, false, null],
+  "objs": [
+    {
+      "x": "hello"
+    },
+    {
+      "y": "world"
+    }
+  ]
+}
