@@ -12,7 +12,7 @@ class Parser {
     }
 
     private fun parseObject(tokens: TokenList): Jobject {
-        var obj = Jobject(hashMapOf())
+        var obj = Jobject(NonNullMap(hashMapOf()))
         var token = tokens.next()
         expectedToken(token, OBJ_END, V_STRING)
         if (token.type != OBJ_END) {
@@ -41,7 +41,7 @@ class Parser {
         val key = token.value
         expectedToken(token, V_STRING)
         expectedToken(tokens.next(), COLON)
-        obj.entries[key!!] = parseValue(tokens)
+        obj.entries[key]= parseValue(tokens)
         token = tokens.next()
         expectedToken(token, COMMA, OBJ_END)
         if (token.type != OBJ_END) {

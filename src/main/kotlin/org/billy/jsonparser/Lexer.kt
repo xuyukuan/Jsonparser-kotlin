@@ -23,7 +23,7 @@ class Lexer(str: String) {
     private fun cut(): Token {
         val c = scanner.next(true)
         return when {
-            c == null -> Token(JSON_END, null)
+            c == Scanner.EOT -> Token(JSON_END, null)
             c == '{' -> Token(OBJ_START, null)
             c == '}' -> Token(OBJ_END, null)
             c == '[' -> Token(ARR_START, null)
@@ -41,8 +41,8 @@ class Lexer(str: String) {
 
     private fun readNumber(x: Char): Token {
         val sb = StringBuilder().append(x)
-        var c: Char? = scanner.next()
-        while (c?.isDigit()!!) {
+        var c = scanner.next()
+        while (c.isDigit()) {
             sb.append(c)
             c = scanner.next()
         }
@@ -53,8 +53,8 @@ class Lexer(str: String) {
     private fun readString(): Token {
         val sb = StringBuilder()
         var c: Char? = scanner.next()
-        notExpected(null, c)
         while (c != '"') {
+            notExpectedEnd(c)
             sb.append(c)
             c = scanner.next()
         }
@@ -91,7 +91,7 @@ class Lexer(str: String) {
         if (c != next) throw RuntimeException("Expected $c but got $next")
     }
 
-    private fun notExpected(c: Char?, next: Char?) {
-        if (c == next) throw RuntimeException("Not Expected $c")
+    private fun notExpectedEnd(next: Char?) {
+        if (next == null) throw RuntimeException("Not Expected End")
     }
 }

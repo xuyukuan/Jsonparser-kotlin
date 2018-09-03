@@ -10,7 +10,7 @@ class TokenList: ArrayList<Token>() {
         return this.get(pos)
     }
 
-    fun forward() {
+    private fun forward() {
         pos++
     }
 
